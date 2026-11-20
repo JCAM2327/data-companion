@@ -59,7 +59,7 @@ export function buildAssistantContext(input: {
       problem: problemLabels[ml.problem], target: ml.config.target || null, features: ml.config.features, principalMetric: ml.principal,
       trainRows: ml.trainRows, testRows: ml.testRows, excludedRows: ml.excludedRows, warnings: ml.warnings,
       recommendedModel: ml.recommended, selectedModel: input.selectedModel || null,
-      models: ml.models.map((m) => ({ id: m.id, name: m.name, metrics: m.metrics, trainScore: m.trainScore, seconds: r(m.seconds), observations: m.observations, error: m.error ?? null, permutationImportance: m.importance.slice(0, 10).map((i) => ({ feature: i.feature, value: r(i.value, 4) })) })),
+      models: ml.models.map((m) => ({ id: m.id, name: m.name, metrics: Object.fromEntries(Object.entries(m.metrics).map(([k, v]) => [k, typeof v === "number" ? r(v, 4) : v])), trainScore: typeof m.trainScore === "number" ? r(m.trainScore, 4) : m.trainScore, seconds: r(m.seconds), observations: m.observations, error: m.error ?? null, permutationImportance: m.importance.slice(0, 10).map((i) => ({ feature: i.feature, value: r(i.value, 4) })) })),
     } : null,
   };
 }
