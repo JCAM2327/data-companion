@@ -18,6 +18,7 @@ export function buildAssistantContext(input: {
   dataset: DatasetSummary;
   originalDataset: DatasetSummary;
   table: RawTable;
+  originalTable: RawTable;
   steps: CleaningStep[];
   rules: ValidationRule[];
   ml: ExperimentResult | null;
@@ -34,7 +35,7 @@ export function buildAssistantContext(input: {
       ...(c.type === "numerica" ? { min: c.min, max: c.max, mean: c.mean, median: c.median, std: c.std } : {}),
     })),
     quality: {
-      scoreBefore: od.qualityScore, scoreNow: quality.score, readiness: readinessLabel[quality.readiness],
+      scoreBefore: assessQuality(input.originalTable, od, rules).score, scoreNow: quality.score, readiness: readinessLabel[quality.readiness],
       dimensions: quality.dimensions.map((d) => ({ name: d.label, score: d.score, weight: d.weight, detail: d.detail })),
       blockers: quality.blockers, warnings: quality.warnings,
       issueCounts: compareIssues(od.issues, ds.issues),

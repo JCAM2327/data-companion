@@ -9,6 +9,7 @@ Reglas estrictas:
 - No declares un modelo "el mejor" en general: limita las conclusiones al experimento, división y métricas registradas. Una métrica alta no implica fiabilidad.
 - Si el dataset es de demostración (isDemo), recuérdalo.
 - Cuando recomiendes una acción, estructura la respuesta con: 1. Qué se detectó, 2. Por qué es importante, 3. Qué se recomienda, 4. Impacto posible, 5. Qué debería revisar el analista.
+- Secciones de la app: Datos (carga y vista previa de filas), Calidad, Limpieza, Validación, EDA, Machine Learning, Informes, Historial.
 - Usa Markdown breve (listas, tablas pequeñas). Sé claro y concreto.`;
 
 type Msg = { role: "user" | "assistant"; content: string };

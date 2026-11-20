@@ -31,7 +31,7 @@ const suggestions = [
 ];
 
 function AssistantPage() {
-  const { dataset, originalDataset, currentTable, steps, validationRules } = useDataset();
+  const { dataset, originalDataset, originalTable, currentTable, steps, validationRules } = useDataset();
   const { result, selected } = useMlSession();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [text, setText] = useState("");
@@ -40,9 +40,9 @@ function AssistantPage() {
   const input = useRef<HTMLTextAreaElement>(null);
   const end = useRef<HTMLDivElement>(null);
 
-  const context = useMemo(() => dataset && originalDataset && currentTable
-    ? buildAssistantContext({ dataset, originalDataset, table: currentTable, steps, rules: validationRules, ml: result, selectedModel: selected })
-    : null, [dataset, originalDataset, currentTable, steps, validationRules, result, selected]);
+  const context = useMemo(() => dataset && originalDataset && currentTable && originalTable
+    ? buildAssistantContext({ dataset, originalDataset, table: currentTable, originalTable, steps, rules: validationRules, ml: result, selectedModel: selected })
+    : null, [dataset, originalDataset, originalTable, currentTable, steps, validationRules, result, selected]);
 
   useEffect(() => { abort.current?.abort(); setMessages([]); }, [currentTable === null ? null : originalDataset]);
   useEffect(() => { end.current?.scrollIntoView({ block: "end" }); }, [messages]);
